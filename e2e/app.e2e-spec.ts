@@ -1,6 +1,6 @@
 import { CatsPage } from './app.po';
 
-describe('cats App', function() {
+describe('intervals App', function() {
   let page: CatsPage;
 
   beforeEach(() => {
