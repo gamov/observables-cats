@@ -1,13 +1,14 @@
-import {interval} from 'rxjs/observable/interval';
+import {interval} from "rxjs";
 
 export class NumberInterval {
-  intervals = interval(1000);
+    numberInterval$ = interval(1000);
+    // numberInterval$: Observable<number> = of(3,6,8);
 
-  gimmeNumbers() {
-    return this.intervals;
-  }
+    gimmeNumbers() {
+        return this.numberInterval$;
+    }
 
-  showIntervals() {
-    this.intervals.subscribe(number => console.log(number));
-  }
+    showIntervals() {
+        this.numberInterval$.subscribe(number => console.log(number));
+    }
 }
