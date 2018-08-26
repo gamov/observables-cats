@@ -1,4 +1,4 @@
-import {interval} from "rxjs";
+import {interval, Observable, of} from "rxjs";
 
 export class NumberInterval {
     numberInterval$ = interval(1000);

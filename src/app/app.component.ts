@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Cat} from './cat/cat';
 import {NumberInterval} from './interval/numberInterval';
-import {combineLatest, zip} from "rxjs";
+import {combineLatest, Subscription, zip} from "rxjs";
 import {filter, map, tap} from "rxjs/operators";
 
 @Component({
@@ -14,6 +14,7 @@ export class AppComponent {
     private catComponent = new Cat();
 
     stringOutput: any[] = [];
+    currentSubscription: Subscription;
 
     constructor() {
         // this.showStreams();
@@ -27,7 +28,7 @@ export class AppComponent {
     }
 
     private combineStreams() {
-        combineLatest(
+        this.currentSubscription = combineLatest(
             this.catComponent.gimmeCats(),
             this.intervalComponent.gimmeNumbers()
         ).pipe(
@@ -56,5 +57,9 @@ export class AppComponent {
                 this.stringOutput.push(catsAndNumbers);
             });
         // http://rxmarbles.com/#zip
+    }
+
+    unsubscribe() {
+        this.currentSubscription.unsubscribe();
     }
 }
