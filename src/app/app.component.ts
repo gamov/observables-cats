@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {Cat} from './cat/cat';
 import {NumberInterval} from './interval/numberInterval';
-import {combineLatest, Subscription, zip} from "rxjs";
-import {filter, map, tap} from "rxjs/operators";
+import {combineLatest, Subject, zip} from "rxjs";
+import {filter, map, takeUntil, tap} from "rxjs/operators";
 
 @Component({
     selector: 'app-root',
@@ -14,7 +14,7 @@ export class AppComponent {
     private catComponent = new Cat();
 
     stringOutput: any[] = [];
-    currentSubscription: Subscription;
+    unsubscriber$ = new Subject();
 
     constructor() {
         // this.showStreams();
@@ -28,12 +28,13 @@ export class AppComponent {
     }
 
     private combineStreams() {
-        this.currentSubscription = combineLatest(
+        combineLatest(
             this.catComponent.gimmeCats(),
             this.intervalComponent.gimmeNumbers()
         ).pipe(
             tap((catsAndNumbers) => console.log(catsAndNumbers)),
             filter((catsAndNumbers) => catsAndNumbers[1] < 5),
+            takeUntil(this.unsubscriber$)
         ).subscribe((map) => {
             // console.log(map);
             this.stringOutput.push(map);
@@ -60,6 +61,7 @@ export class AppComponent {
     }
 
     unsubscribe() {
-        this.currentSubscription.unsubscribe();
+        this.unsubscriber$.next();
+        this.unsubscriber$.complete();
     }
 }

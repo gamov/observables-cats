@@ -31,7 +31,7 @@ describe('AppComponent', () => {
         expect(compiled.querySelector('h1').textContent).toContain('Output');
         discardPeriodicTasks();
     }));
-    it('should have cats names', fakeAsync(() => {
+    it('should have cats names (zipstreams)', fakeAsync(() => {
         const fixture = TestBed.createComponent(AppComponent);
         fixture.detectChanges();
         const compiled = fixture.debugElement.nativeElement;
