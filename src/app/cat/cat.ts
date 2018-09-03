@@ -1,4 +1,4 @@
-import {Subscription, Observable, of} from 'rxjs';
+import {Observable, of, Subscription} from 'rxjs';
 
 export class Cat {
     cats$: Observable<string> = of('tomtom', 'steak', 'zorro');
